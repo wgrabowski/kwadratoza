@@ -1,0 +1,8 @@
+<ng-container *ngIf="{status: currentTile$ | async } as data">
+<app-tile *ngIf="data?.status !== null; else keine" [tileStatus]="data.status"> </app-tile>
+
+<ng-template #keine>
+    trwa budynek ...
+</ng-template>
+
+</ng-container>

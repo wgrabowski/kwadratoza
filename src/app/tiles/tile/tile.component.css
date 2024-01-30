@@ -1,0 +1,21 @@
+.tile {
+    --grid-color: #FC4C02;
+    --visited-color:#FF0000;
+    --cluster: #2CA57E;
+    --square-color: #428CF4;
+
+  width: 50dvmin;
+  height: 50dvmin;
+  background: var(--bg,lightgrey);
+  border: 1dvmin solid var(--grid-color);
+}
+.tile.visited {
+ --bg: var(--visited-color);
+}
+.tile.cluster {
+    --bg: var(--cluster-color);
+}
+.tile.square {
+    --bg: var(--square-color);
+}
+  

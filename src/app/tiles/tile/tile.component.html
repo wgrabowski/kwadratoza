@@ -1,0 +1,7 @@
+<div *ngIf="tileStatus !== null" class="tile"
+[ngClass]="{
+    cluster: tileStatus?.isInCluster ||tileStatus?.isInMaxCluster ,
+    square: tileStatus?.isInSquare,
+    visited: tileStatus?.isVisited,
+}"
+></div>
