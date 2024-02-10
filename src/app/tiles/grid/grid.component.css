@@ -23,3 +23,6 @@
 .grid-81 {
 	grid-template: repeat(9, 1fr) / repeat(9, 1fr);
 }
+.grid-121 {
+	grid-template: repeat(11, 1fr) / repeat(11, 1fr);
+}

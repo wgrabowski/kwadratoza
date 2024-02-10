@@ -1,6 +1,6 @@
 :host {
 	display: flex;
-	flex-direction: column;
+	flex-flow: column wrap;
 	justify-content: space-around;
 	gap: 1vmin;
 	flex: 1;
@@ -14,10 +14,10 @@ button {
 	--color: var(--white);
 	appearance: none;
 	font-size: 1rem;
+	aspect-ratio: 1;
 	background: transparent;
 	color: var(--color);
-	aspect-ratio: 1;
-	border: 1px dashed var(--color);
+	border: 1px solid var(--color);
 	cursor: pointer;
 }
 

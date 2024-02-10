@@ -13,9 +13,12 @@ export class LocationService implements OnDestroy {
 	constructor() {}
 
 	startWatchingPosition() {
-		this.watchId = navigator.geolocation.watchPosition((position) => {
-			this.position.next(position.coords);
-		});
+		this.watchId = navigator.geolocation.watchPosition(
+			(position) => {
+				this.position.next(position.coords);
+			},
+			(error) => alert(error.message),
+		);
 	}
 	stopWatchingPosition() {
 		if (this.watchId) {
