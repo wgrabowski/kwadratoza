@@ -1,0 +1,8 @@
+:host {
+	display: flex;
+	flex-flow: column wrap;
+	align-items: center;
+	justify-content: space-around;
+	height: 100dvh;
+	width: 100dvw;
+}

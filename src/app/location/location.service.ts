@@ -1,18 +1,20 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class LocationService implements OnDestroy {
-	private location = new Subject<GeolocationCoordinates>();
+	private position = new BehaviorSubject<GeolocationCoordinates | undefined>(
+		undefined,
+	);
 	private watchId: number | null = null;
 
 	constructor() {}
 
 	startWatchingPosition() {
 		this.watchId = navigator.geolocation.watchPosition((position) => {
-			this.location.next(position.coords);
+			this.position.next(position.coords);
 		});
 	}
 	stopWatchingPosition() {
@@ -21,10 +23,10 @@ export class LocationService implements OnDestroy {
 		}
 	}
 	getPosition() {
-		return this.location.asObservable();
+		return this.position.asObservable();
 	}
 
-	private ngOnDestroy() {
+	ngOnDestroy() {
 		this.stopWatchingPosition();
 	}
 }

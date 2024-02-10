@@ -1,0 +1,26 @@
+:host {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	gap: 1vmin;
+	flex: 1;
+}
+.buttons {
+	display: flex;
+	width: 100%;
+	justify-content: space-around;
+}
+button {
+	--color: var(--white);
+	appearance: none;
+	font-size: 1rem;
+	background: transparent;
+	color: var(--color);
+	aspect-ratio: 1;
+	border: 1px dashed var(--color);
+	cursor: pointer;
+}
+
+button.active {
+	--color: var(--yellow);
+}

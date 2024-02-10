@@ -1,0 +1,32 @@
+:host{
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+}
+
+label {
+	color: var(--white)
+}
+
+input{
+font-size:2em;
+
+max-width: 90dvw;
+}
+
+a{
+	color:var(--blue)
+}
+
+
+form {
+
+		display: flex;
+		flex-flow: column;
+		align-items: center;
+
+}
+button {
+	background: var(--yellow);
+	padding:1em;
+}

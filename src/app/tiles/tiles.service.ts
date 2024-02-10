@@ -1,44 +1,72 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TileCoordinates, TileGridItem } from './tiles.model';
+import { BehaviorSubject, filter, map, Observable, tap } from 'rxjs';
+import { TileCoordinates, TilesApiResponse, TileStatus } from './tiles.model';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class TilesService {
-	getTileFromCoordinates({
-		latitude,
-		longitude,
-	}: GeolocationCoordinates): TileCoordinates {
-		// this was taken from statshunters chrome extension
-		const x = Math.floor(((longitude + 180) / 360) * Math.pow(2, 14));
-		const y = Math.floor(
-			((1 -
-				Math.log(
-					Math.tan(this.deg2rad(latitude)) +
-						1 / Math.cos(this.deg2rad(latitude)),
-				) /
-					Math.PI) /
-				2) *
-				Math.pow(2, 14),
+	private tiles$ = new BehaviorSubject<TilesApiResponse | undefined>(undefined);
+	constructor(private httpClient: HttpClient) {}
+
+	fetchTiles() {
+		const apiKey = window.localStorage.getItem('sh_api_key');
+		return this.httpClient
+			.get<TilesApiResponse>(`https://www.statshunters.com/api/${apiKey}/tiles`)
+			.pipe(tap((tiles) => this.tiles$.next(tiles)));
+	}
+
+	getTileStatus({ x, y }: TileCoordinates): Observable<TileStatus> {
+		return this.tiles$.pipe(
+			filter((value) => !!value),
+			map((data) => {
+				if (this.isInSquare(data!.square, { x, y })) {
+					return TileStatus.square;
+				}
+
+				if (this.isInCategory(data!.cluster, { x, y })) {
+					return TileStatus.maxCluster;
+				}
+
+				if (this.isInCategory(data!.restCluster, { x, y })) {
+					return TileStatus.cluster;
+				}
+
+				if (this.isInCategory(data!.tiles, { x, y })) {
+					return TileStatus.vistited;
+				}
+
+				return TileStatus.notVisited;
+			}),
 		);
-		return { x: x, y: y };
 	}
 
-	getAdjacentTile(
+	isInCategory(
+		category: TileCoordinates[],
 		{ x, y }: TileCoordinates,
-		distance: TileCoordinates,
-		gridSize: 1 | 3 | 5 | 7 | 9,
-	): TileGridItem {
-		return {
-			x: x + distance.x,
-			y: y + distance.y,
-			gridColumn: gridSize === 1 ? 1 : distance.y + (gridSize - 1) / 2,
-			gridRow: gridSize === 1 ? 1 : distance.x + (gridSize - 1) / 2,
-		};
+	): boolean {
+		return category.some((element) => element.x === x && element.y === y);
 	}
 
-	private deg2rad(degrees: number) {
-		const pi = Math.PI;
-		return degrees * (pi / 180);
+	isInSquare(
+		square: TilesApiResponse['square'],
+		{ x, y }: TileCoordinates,
+	): boolean {
+		// const getTilesFromSquare = function(data: TilesApiResponse['square']) {
+		// 	var tiles:TileCoordinates[] = [];
+		// 	for (var x = data.x1; x <= data.x2; x++) {
+		// 		for (var y = data.y1; y <= data.y2; y++) {
+		// 			tiles.push({x,y});
+		// 		}
+		// 	}
+		// 	return tiles;
+		// }
+		// const tiles = getTilesFromSquare(square);
+
+		// return this.isInCategory(tiles,{x,y});
+		return (
+			square.x1 <= x && x <= square.x2 && square.y1 <= y && y <= square.y2 - 2
+		);
 	}
 }

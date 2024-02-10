@@ -1,1 +1,37 @@
-/* You can add global styles to this file, and also import other style files */
+body,
+html {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: #031010;
+	font:
+		4vmin "Fira Code",
+		monospace;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: normal;
+	text-transform: lowercase;
+	text-transform: uppercase;
+	letter-spacing: 1ch;
+	color: var(--yellow);
+	font-size:1em;
+}
+
+:root {
+	--red: #890d00cc;
+	--red2: #ff2606cc;
+	--yellow: #ec8719ff;
+	--green: #00a264cc;
+	--blue: #387debcc;
+	--grid-line-width: 1px;
+	--gradient-line-width: 2px;
+	--gradient-repeat-length: 10px;
+	--white: #f2f2f2cc;
+}

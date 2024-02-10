@@ -1,0 +1,5 @@
+<div
+	class="tile tile-{{ coordinates | tileStatus | async }}"
+	[ngClass]="{ here: here }"
+	*ngIf="coordinates !== null"
+></div>

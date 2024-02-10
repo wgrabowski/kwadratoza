@@ -3,9 +3,19 @@ export interface TileCoordinates {
 	y: number;
 }
 
-export interface TileGridItem extends TileCoordinates {
-	gridColumn: number;
-	gridRow: number;
+export interface TilesApiResponse {
+	square: { x1: number; y1: number; x2: number; y2: number };
+	tiles: TileCoordinates[];
+	cluster: TileCoordinates[];
+	restCluster: TileCoordinates[];
 }
 
-export interface TilesApiResponse {}
+export type GridSize = 1 | 3 | 5 | 7 | 9;
+
+export enum TileStatus {
+	notVisited = 'notVisited',
+	vistited = 'visited',
+	cluster = 'cluster',
+	maxCluster = 'maxCluster',
+	square = 'square',
+}

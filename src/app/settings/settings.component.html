@@ -1,0 +1,8 @@
+<h2>Ustawienia</h2>
+
+<form action="/" method="POST">
+<label for="key">Klucz api ze <a href="https://statshunters.com/settings" target="_blank">Statshunters</a></label>
+<input type="text" id="key" [value]="apiKey" (change)="saveKey($event)">
+
+<button>ZAPISZ</button>
+</form>

@@ -1,0 +1,19 @@
+<div class="buttons">
+	<button
+		*ngFor="let sideSize of [1, 3, 5, 7,9]"
+		(click)="setCount(sideSize)"
+		[ngClass]="{ active: count() === sideSize }"
+	>
+		{{ sideSize }}&times;{{ sideSize }}
+	</button>
+</div>
+<ng-container *ngIf="{ position: position$ | async } as data">
+	<app-grid [size]="size()">
+		<app-tile
+			*ngFor="let offset of offsets()"
+			[coordinates]="data?.position | coordinatesAsTile: offset"
+			[here]="offset.x === 0 && offset.y === 0"
+			>{{ offset | json }}</app-tile
+		>
+	</app-grid>
+</ng-container>
