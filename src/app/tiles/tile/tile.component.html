@@ -2,4 +2,6 @@
 	class="tile tile-{{ coordinates | tileStatus | async }}"
 	[ngClass]="{ here: here }"
 	*ngIf="coordinates !== null"
-></div>
+>
+<div class="pin" *ngIf="here" style="position: absolute; top:{{(coordinates.currentTilePos?.y ?? 0) * 100}}%;left:{{(coordinates.currentTilePos?.x ?? 0) * 100}}%"></div>
+</div>

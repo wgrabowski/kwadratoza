@@ -1,6 +1,6 @@
 <div class="buttons">
 	<button
-		*ngFor="let sideSize of [1, 3, 5, 7,9]"
+		*ngFor="let sideSize of [1, 3, 5, 7, 9]"
 		(click)="setCount(sideSize)"
 		[ngClass]="{ active: count() === sideSize }"
 	>

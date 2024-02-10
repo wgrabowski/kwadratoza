@@ -1,6 +1,10 @@
 export interface TileCoordinates {
 	x: number;
 	y: number;
+	currentTilePos?: {
+		x: number;
+		y: number;
+	};
 }
 
 export interface TilesApiResponse {

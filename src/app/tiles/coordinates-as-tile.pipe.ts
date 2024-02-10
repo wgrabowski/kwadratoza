@@ -21,8 +21,9 @@ export class CoordinatesAsTilePipe implements PipeTransform {
 		{ x: offsetX, y: offsetY }: TileCoordinates,
 	): TileCoordinates {
 		// this was taken from statshunters chrome extension
-		const x = Math.floor(((longitude + 180) / 360) * Math.pow(2, 14));
-		const y = Math.floor(
+		const xRaw = ((longitude + 180) / 360) * Math.pow(2, 14);
+		const x = Math.floor(xRaw);
+		const yRaw =
 			((1 -
 				Math.log(
 					Math.tan(this.deg2rad(latitude)) +
@@ -30,9 +31,16 @@ export class CoordinatesAsTilePipe implements PipeTransform {
 				) /
 					Math.PI) /
 				2) *
-				Math.pow(2, 14),
-		);
-		return { x: x + offsetX, y: y + offsetY };
+			Math.pow(2, 14);
+		const y = Math.floor(yRaw);
+		return {
+			x: x + offsetX,
+			y: y + offsetY,
+			currentTilePos: {
+				x: xRaw - x,
+				y: yRaw - y,
+			},
+		};
 	}
 
 	private deg2rad(degrees: number) {
